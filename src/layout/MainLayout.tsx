@@ -10,7 +10,7 @@ function MainLayout({ children }: MainLayoutProps) {
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <main id="main">{children}</main>
             <Footer />
         </>
     );

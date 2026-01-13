@@ -5,6 +5,7 @@ import News from '@/pages/News';
 import NewsDetail from '@/pages/NewsDetail';
 import Gallery from '@/pages/Gallery';
 import Contact from '@/pages/Contact';
+import Genealogy from "@/pages/Genealogy";
 
 function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ function AppRoutes() {
       <Route path="/tin-tuc/:slug" element={<NewsDetail />} />
       <Route path="/thu-vien-anh" element={<Gallery />} />
       <Route path="/lien-he" element={<Contact />} />
+      <Route path="/pha-do" element={<Genealogy />} />
     </Routes>
   )
 }

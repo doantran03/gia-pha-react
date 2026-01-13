@@ -1,0 +1,25 @@
+.gallery {
+  padding: 60px 0;
+
+  &__heading {
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  &__masonry {
+    column-count: 4;
+    column-gap: 16px;
+  }
+
+  &__item {
+    break-inside: avoid;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+}
