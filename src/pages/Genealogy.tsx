@@ -1,10 +1,8 @@
-import FamilyTree from "@/features/genealogy/Family-Tree";
+import FamilyTreeNode from "@/features/genealogy/Family-Tree";
 
 function Genealogy() {
     return (
-        <div>
-            <FamilyTree />
-        </div>
+        <FamilyTreeNode />
     );
 }
 

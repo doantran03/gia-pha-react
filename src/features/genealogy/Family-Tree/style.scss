@@ -1,0 +1,36 @@
+.genealogy {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.genealogy > .container {
+    width: 100%;
+}
+
+#tree {
+    background-color: transparent;
+}
+
+#tree .bft-img-button svg {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#tree .bft-img-button[title="Edit"] {
+    display: none;
+}
+
+#tree .bft-family-menu [data-item] {
+    display: flex;
+    column-gap: 4px;
+    align-items: center;
+}
+
+#tree .bft-button {
+    padding: 5px 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: normal;
+}

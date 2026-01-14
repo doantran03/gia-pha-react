@@ -1,120 +1,176 @@
-import { useEffect, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import FamilyTree from '@balkangraph/familytree.js';
+import { useEffect, useRef } from 'react';
+import "./style.scss";
 
-function FamilyTree() {
-  const treeRef = useRef(null);
-  const familyRef = useRef(null);
+interface Member {
+    id: string | number;
+    fullname?: string;
+    other_name?: string;
+    position?: string;
+    birth_date?: string;
+    gender?: 'nam' | 'nu' | 'other';
+    order?: string | number;
+    generation?: number;
+    address?: string;
+    biography?: string;
+    death_date?: string;
+    feature_image?: string | boolean;
+    fid?: string | number | null;
+    mid?: string | number | null;
+    pids?: (string | number)[];
+}
 
-  useEffect(() => {
-    if (!treeRef.current || !window.FamilyTree) return;
+interface ApiResponse {
+    data: Member[];
+}
 
-    const options = getOptions();
+interface UrlOptions {
+    enableSearch: boolean;
+    scaleInitial: number | string;
+}
 
-    familyRef.current = new window.FamilyTree(treeRef.current, {
-      mouseScrool: FamilyTree.none,
-      scaleInitial: options.scaleInitial,
-      mode: "dark",
-      template: "hugo",
-      roots: [3],
+function FamilyTreeNode() {
+    const treeRef = useRef<HTMLDivElement>(null);
+    const familyInstanceRef = useRef<any>(null);
 
-      nodeMenu: {
-        edit: { text: "Edit" },
-        details: { text: "Details" },
-      },
+    const getOptions = (): UrlOptions => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const fit = searchParams.get('fit');
 
-      nodeTreeMenu: true,
+        if (fit === 'yes') {
+            return {
+                enableSearch: false,
+                scaleInitial: FamilyTree.match.boundary
+            };
+        }
 
-      nodeBinding: {
-        field_0: "name",
-        field_1: "born",
-        img_0: "photo",
-      },
-
-      editForm: {
-        titleBinding: "name",
-        photoBinding: "photo",
-        addMoreBtn: "Add element",
-        addMore: "Add more elements",
-        addMoreFieldName: "Element name",
-        generateElementsFromFields: false,
-
-        elements: [
-          { type: "textbox", label: "Full Name", binding: "name" },
-          { type: "textbox", label: "Email Address", binding: "email" },
-          [
-            { type: "textbox", label: "Phone", binding: "phone" },
-            { type: "date", label: "Date Of Birth", binding: "born" },
-          ],
-          [
-            {
-              type: "select",
-              options: [
-                { value: "bg", text: "Bulgaria" },
-                { value: "ru", text: "Russia" },
-                { value: "gr", text: "Greece" },
-              ],
-              label: "Country",
-              binding: "country",
-            },
-            { type: "textbox", label: "City", binding: "city" },
-          ],
-          {
-            type: "textbox",
-            label: "Photo Url",
-            binding: "photo",
-            btn: "Upload",
-          },
-        ],
-      },
-    });
-
-    familyRef.current.on("field", function (sender, args) {
-      if (args.name === "born") {
-        const date = new Date(args.value);
-        args.value = date.toLocaleDateString();
-      }
-    });
-
-    familyRef.current.load(nodes);
-
-    return () => {
-      treeRef.current.innerHTML = "";
-      familyRef.current = null;
+        return {
+            enableSearch: true,
+            scaleInitial: 1
+        };
     };
-  }, []);
 
-  return (
-    <div
-      ref={treeRef}
-      style={{ width: "100%", height: "100vh" }}
-    />
-  );
+    const normalizeMembers = (members: Member[]): Member[] => {
+        return members.map(member => {
+            const hasImage =
+                member.feature_image !== null &&
+                member.feature_image !== false &&
+                member.feature_image !== "";
+
+            if (!hasImage) {
+                const avatar =
+                    member.gender === 'nu'
+                        ? '/src/assets/images/avatar-nu.jpg'
+                        : '/src/assets/images/avatar-nam.jpg';
+
+                return {
+                    ...member,
+                    feature_image: avatar,
+                };
+            }
+
+            return member;
+        });
+    };
+
+    const getMembers = async (familyInstance: any) => {
+        const url = "https://api-giapha.py-media.com/wp-json/gia-pha/v1/members";
+
+        try {
+            const res = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaS1naWFwaGEucHktbWVkaWEuY29tIiwiaWF0IjoxNzY4MzU4OTU0LCJuYmYiOjE3NjgzNTg5NTQsImV4cCI6MTc2ODk2Mzc1NCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.m255l214xedfmMhJ1j-jQnKtmJMEjTaDzhim8LC-IPw"
+                }
+            });
+
+            const result: ApiResponse = await res.json();
+
+            const data = normalizeMembers(result.data);
+
+            const rootMember = data.find(m =>
+                m.generation === 1 &&
+                m.gender === "nam" &&
+                m.fid === null &&
+                m.mid === null
+            );
+
+            if (rootMember) {
+                familyInstance.config.roots = [rootMember.id];
+            }
+
+            familyInstance.load(data);
+
+        } catch (err) {
+            console.error('Error fetching members:', err);
+        }
+    };
+
+    useEffect(() => {
+        if (!treeRef.current) return;
+
+        const options = getOptions();
+
+        const family = new FamilyTree(treeRef.current, {
+            mouseScrool: FamilyTree.none,
+            scaleInitial: Number(options.scaleInitial),
+            mode: 'light',
+            template: 'hugo',
+            enableSearch: options.enableSearch, 
+            nodeMenu: undefined, 
+            nodeBinding: { 
+                img_0: 'feature_image', 
+                field_0: 'fullname', 
+                field_1: 'birth_date', 
+            }, 
+            editForm: { 
+                photoBinding: 
+                "feature_image", 
+                titleBinding: "fullname", 
+                generateElementsFromFields: false,
+                elements: [
+                    { type: 'textbox', label: 'Họ và tên', binding: 'fullname' },
+                    { type: 'date', label: 'Ngày sinh', binding: 'birth_date' },
+                    [
+                        { type: 'select', options: [{ value: 'nam', text: 'Nam' }, { value: 'nu', text: 'Nữ' }, { value: 'other', text: 'Khác' }], label: 'Giới tính', binding: 'gender' },
+                        { type: 'textbox', label: 'Thứ tự', binding: 'order' },
+                        { type: 'textbox', label: 'Đời', binding: 'generation' },
+                    ],
+                    { type: 'textbox', label: 'Địa chỉ', binding: 'address' },
+                    { type: 'textbox', label: 'Tiểu sử', binding: 'biography' },
+                    { type: 'date', label: 'Ngày mất', binding: 'death_date' },
+                ]
+            },
+        });
+
+        // Format birth date
+        family.on('field', function (_sender: any, args: any) {
+            if (args.name === 'birth_date' && args.value) {
+                const date = new Date(args.value);
+                if (!isNaN(date.getTime())) {
+                    args.value = date.toLocaleDateString();
+                }
+            }
+        });
+
+        familyInstanceRef.current = family;
+
+        getMembers(family);
+
+        return () => {
+            familyInstanceRef.current = null;
+        };
+    }, []);
+
+    return (
+        <section className="genealogy">
+            <div className="container">
+                <div ref={treeRef} id="tree" />
+            </div>
+        </section>
+    );
 }
 
-/* ===== DATA ===== */
-const nodes = [
-  { id: 1, pids: [3], gender: "male", photo: "https://cdn.balkan.app/shared/m60/2.jpg", name: "Zeph Daniels", born: "1954-09-29" },
-  { id: 2, pids: [3], gender: "male", photo: "https://cdn.balkan.app/shared/m60/1.jpg", name: "Rowan Annable", born: "1952-10-10" },
-  { id: 3, pids: [1, 2], gender: "female", photo: "https://cdn.balkan.app/shared/w60/1.jpg", name: "Laura Shepherd", born: "1943-01-13", email: "laura.shepherd@gmail.com", phone: "+44 845 5752 547", city: "Moscow", country: "ru" },
-  { id: 4, pids: [5], photo: "https://cdn.balkan.app/shared/m60/3.jpg", name: "Rowan Annable" },
-  { id: 5, pids: [4], gender: "female", photo: "https://cdn.balkan.app/shared/w60/3.jpg", name: "Lois Sowle" },
-  { id: 6, mid: 2, fid: 3, pids: [7], gender: "female", photo: "https://cdn.balkan.app/shared/w30/1.jpg", name: "Tyler Heath", born: "1975-11-12" },
-  { id: 7, pids: [6], mid: 5, fid: 4, gender: "male", photo: "https://cdn.balkan.app/shared/m30/3.jpg", name: "Samson Stokes", born: "1986-10-01" },
-  { id: 8, mid: 7, fid: 6, gender: "female", photo: "https://cdn.balkan.app/shared/w10/3.jpg", name: "Celeste Castillo", born: "2021-02-01" },
-];
-
-function getOptions() {
-  const params = new URLSearchParams(window.location.search);
-  const fit = params.get("fit");
-
-  let scaleInitial = 1;
-  let enableSearch = true;
-
-  if (fit === "yes") {
-    enableSearch = false;
-    scaleInitial = FamilyTree.match.boundary;
-  }
-
-  return { enableSearch, scaleInitial };
-}
-
-export default FamilyTree
+export default FamilyTreeNode;
