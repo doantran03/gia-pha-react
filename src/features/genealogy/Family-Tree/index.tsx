@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import avatarNam from '@/assets/images/avatar-nam.jpg';
+import avatarNu from '@/assets/images/avatar-nu.jpg';
 import FamilyTree from '@balkangraph/familytree.js';
 import { useEffect, useRef } from 'react';
 import "./style.scss";
@@ -62,8 +64,8 @@ function FamilyTreeNode() {
             if (!hasImage) {
                 const avatar =
                     member.gender === 'nu'
-                        ? '/src/assets/images/avatar-nu.jpg'
-                        : '/src/assets/images/avatar-nam.jpg';
+                        ? avatarNu
+                        : avatarNam;
 
                 return {
                     ...member,
