@@ -1,10 +1,9 @@
+import Detail from "@/features/Detail";
 
 function NewsDetail() {
     return (
-        <div>
-            
-        </div>
+        <Detail />
     );
-}
+}   
 
 export default NewsDetail;

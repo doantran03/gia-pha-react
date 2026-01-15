@@ -1,13 +1,21 @@
-.genealogy {
+.page-genealogy {
     padding-top: 60px;
     padding-bottom: 60px;
 }
 
-.genealogy > .container {
+.page-genealogy > .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 100%;
 }
 
+.page-genealogy__heading {
+    margin-bottom: 15px;
+}
+
 #tree {
+    overflow: visible !important;
     background-color: transparent;
 }
 
@@ -18,8 +26,12 @@
     transform: translate(-50%, -50%);
 }
 
-#tree .bft-img-button[title="Edit"] {
+#tree .bft-edit-form-instruments {
     display: none;
+}
+
+#tree .bft-edit-form-fields-inner {
+    margin: 50px 7px 20px 7px;
 }
 
 #tree .bft-family-menu [data-item] {

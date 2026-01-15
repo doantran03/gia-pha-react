@@ -1,4 +1,4 @@
-import FamilyTreeNode from "@/features/genealogy/Family-Tree";
+import FamilyTreeNode from "@/features/FamilyTree";
 
 function Genealogy() {
     return (

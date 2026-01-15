@@ -1,7 +1,7 @@
-import Events from "@/features/home/Events";
-import Gallery from "@/features/home/Gallery";
-import Intro from "@/features/home/Intro";
-import News from "@/features/home/News";
+import Events from "@/features/FamilyFoundation";
+import Gallery from "@/features/Gallery";
+import Intro from "@/features/Intro";
+import News from "@/features/News";
 
 function Home() {
     return (
