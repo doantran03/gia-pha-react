@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 
 const axiosClient: AxiosInstance = axios.create({
-  baseURL: "https://api-giapha.py-media.com/",
+  baseURL: "https://api-gia-pha.py-media.com/",
   headers: {
     "Content-Type": "application/json",
   },

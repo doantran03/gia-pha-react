@@ -1,6 +1,6 @@
 export interface MemberType {
     id: number;
-    fullname?: string;
+    full_name?: string;
     other_name?: string;
     position?: string;
     birth_date?: string;
@@ -10,7 +10,7 @@ export interface MemberType {
     address?: string;
     biography?: string;
     death_date?: string;
-    feature_image?: string | boolean | null;
+    avatar?: string | boolean | null;
     fid?: number | null;
     mid?: number | null;
     pids?: number[];
