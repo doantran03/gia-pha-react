@@ -37,14 +37,14 @@ function FamilyTreeNode() {
     const normalizeMembers = (members: MemberType[]): MemberType[] => {
         return members.map(member => {
             const hasImage =
-                member.feature_image !== null &&
-                member.feature_image !== false &&
-                member.feature_image !== "";
+                member.avatar !== null &&
+                member.avatar !== false &&
+                member.avatar !== "";
 
             if (!hasImage) {
                 return {
                     ...member,
-                    feature_image:
+                    avatar:
                         member.gender === "female"
                             ? avatarNu
                             : avatarNam,
@@ -94,17 +94,17 @@ function FamilyTreeNode() {
             nodeMenu: undefined,
 
             nodeBinding: {
-                img_0: "feature_image",
-                field_0: "fullname",
+                img_0: "avatar",
+                field_0: "full_name",
                 field_1: "birth_date",
             },
 
             editForm: {
-                photoBinding: "feature_image",
-                titleBinding: "fullname",
+                photoBinding: "avatar",
+                titleBinding: "full_name",
                 generateElementsFromFields: false,
                 elements: [
-                    { type: "textbox", label: "Họ và tên", binding: "fullname" },
+                    { type: "textbox", label: "Họ và tên", binding: "full_name" },
                     { type: "date", label: "Ngày sinh", binding: "birth_date" },
                     [
                         {

@@ -3,7 +3,7 @@ import type { MemberType } from "@/types/members";
 
 const memberApi = {
     getMembers() {
-        const url = "wp-json/gia-pha/v1/members";
+        const url = "api/v1/members";
         return axiosClient.get<MemberType[]>(url);
     },
 };
