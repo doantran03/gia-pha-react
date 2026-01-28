@@ -4,7 +4,7 @@ export interface NewsType {
   title: string;
   excerpt: string;
   content: string;
-  thumbnail: string;
+  featured_image: string;
 }
 
 export interface NewsPagination {

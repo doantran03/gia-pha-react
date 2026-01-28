@@ -10,7 +10,7 @@ function NewsItem({ item }: NewsItemProps) {
         <div className="news__item">
             <div className="news__item-thumb">
                 <Link to={`/tin-tuc/${item.slug}`}>
-                    <img src={item.thumbnail} alt={item.title} loading="lazy" />
+                    <img src={item.featured_image} alt={item.title} loading="lazy" />
                 </Link>
             </div>
             <div className="news__item-content">
