@@ -14,7 +14,7 @@ function MenuHeader() {
                 <NavLink to="/pha-do" className="menu__link">Phả đồ</NavLink>
             </li>
             <li className="menu__item">
-                <NavLink to="/tu-duong" className="menu__link">Từ đường</NavLink>
+                <NavLink to="/su-kien" className="menu__link">Sự kiện</NavLink>
             </li>
             <li className="menu__item">
                 <NavLink to="/toc-uoc" className="menu__link">Tộc ước</NavLink>

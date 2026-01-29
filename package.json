@@ -11,14 +11,20 @@
   },
   "dependencies": {
     "@balkangraph/familytree.js": "^1.9.47",
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/react": "^6.1.20",
+    "@fullcalendar/timegrid": "^6.1.20",
     "axios": "^1.13.2",
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-leaflet": "^5.0.0",
     "react-paginate": "^8.3.0",
+    "react-responsive-masonry": "^2.7.1",
     "react-router-dom": "^7.11.0",
-    "sass": "^1.97.2"
+    "sass": "^1.97.2",
+    "solarlunar": "^2.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

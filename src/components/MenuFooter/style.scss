@@ -1,15 +1,16 @@
-.menu__list {
+#footer .menu__list {
     display: flex;
     gap: 50px;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
 
-.menu__item:hover .menu__link {
+#footer .menu__item:hover .menu__link {
     color: var(--color-active);
 }
 
-.menu__link {
+#footer .menu__link {
     font-weight: 400;
     font-size: 16px;
     line-height: 1.5;
@@ -17,6 +18,12 @@
     transition: color .2s ease-in-out;
 }
 
-.menu__link.active {
+#footer .menu__link.active {
     color: var(--color-active);
+}
+
+@media (max-width: 767px) {
+    #footer .menu__list {
+        gap: 10px 20px;
+    }
 }
