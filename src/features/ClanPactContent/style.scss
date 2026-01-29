@@ -1,0 +1,28 @@
+.page-clan-pact {
+    position: relative;
+    margin-top: -169px;
+    padding-top: 110px;
+    padding-bottom: 165px;
+    background-image: url(/src/assets/images/bg-intro.png);
+    background-size: contain;
+    background-position: 44% 100%;
+    background-repeat: no-repeat;
+}
+
+.page-clan-pact > .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1150px;
+}
+
+.page-clan-pact__heading {
+    margin-bottom: 15px;
+}
+
+.page-clan-pact__content {
+    padding-right: 8px;
+    height: 350px;
+    overflow-y: auto;
+}

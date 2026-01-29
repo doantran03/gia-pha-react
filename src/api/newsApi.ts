@@ -1,4 +1,5 @@
 import axiosClient from "@/api/axiosClient";
+import type { GalleryType } from "@/types/gallery";
 import type { NewsType, NewsListResponse } from "@/types/news";
 
 const newsApi = {
@@ -10,6 +11,11 @@ const newsApi = {
   getNewsHome() {
     const url = "api/v1/posts/home";
     return axiosClient.get<NewsType[]>(url);
+  },
+
+  getGallery() {
+    const url = "api/v1/posts/gallery";
+    return axiosClient.get<GalleryType[]>(url);
   },
 
   getNewsDetail(slug: string) {
