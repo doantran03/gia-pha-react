@@ -18,7 +18,7 @@ const newsApi = {
     return axiosClient.get<GalleryType[]>(url);
   },
 
-  getNewsDetail(slug: string) {
+  getNewsDetail(slug: string | undefined) {
     const url = `api/v1/posts/${slug}`;
     return axiosClient.get<NewsType>(url);
   },
