@@ -30,7 +30,7 @@ function FamilyTreeNode() {
 
         return {
             enableSearch: true,
-            scaleInitial: 1,
+            scaleInitial: 0.5,
         };
     };
 

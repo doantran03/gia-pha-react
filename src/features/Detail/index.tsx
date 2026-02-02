@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
-import './style.scss';
-import { useEffect, useState } from "react";
 import type { NewsType } from "@/types/news";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import newsApi from "@/api/newsApi";
+import './style.scss';
 
 function Detail() {
     const { slug } = useParams<{ slug: string }>();
@@ -11,13 +11,9 @@ function Detail() {
     useEffect(() => {
         const fetchNew = async () => {
             try {
-                const response = await axios.get(
-                    `https://api-giapha.py-media.com/wp-json/gia-pha/v1/news/${slug}`
-                );
+                const response = await newsApi.getNewsDetail(slug);
 
-                console.log(response.data);
-
-                setNews(response.data.data);
+                setNews(response.data);
             } catch (err) {
                 console.error(err);
             } 
